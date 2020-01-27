@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head><meta charset="UTF-8" /></head>
+<body>
+		
+	<section class="layout-content" layout:fragment="corpo">	
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<i class="oi oi-caret-right"></i>
+						<span>DASHBOARD</span>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		
+		<div class="container">
+			<div id="list-home" class="row">
+				<div class="animated fadeIn">
+			<!-- Widgets  -->
+			
+			<div class="row">
+				<div class="col-lg-5 col-md-6" style="margin: 0 0 0 10%">
+					<div class="card">
+						<div class="card-body">
+							<div class="stat-widget-five">
+								<div class="stat-icon dib flat-color-1">
+									<i class="pe-7s-cash"></i>
+								</div>
+								<div class="stat-content">
+									<div class="text-left dib">
+										<div class="stat-text">
+											R$ <span class="count"><p th:text = "${valorTotalEmCaixa}"/></span>
+										</div>
+										<div class="stat-heading">Dinheiro em Caixa</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-lg-5 col-md-6">
+					<div class="card">
+						<div class="card-body">
+							<div class="stat-widget-five">
+								<div class="stat-icon dib flat-color-2">
+									<i class="pe-7s-cash"></i>
+								</div>
+								<div class="stat-content">
+									<div class="text-left dib">
+										<div class="stat-text">
+											R$ <span class="count"><p th:text = "${valorVenda}"/></span>
+										</div>
+										<div class="stat-heading">Valor Total de Vendas</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-lg-5 col-md-6" style="margin: 2% 0 0 10%">
+					<div class="card">
+						<div class="card-body">
+							<div class="stat-widget-five">
+								<div class="stat-icon dib flat-color-2">
+									<i class="pe-7s-cash"></i>
+								</div>
+								<div class="stat-content">
+									<div class="text-left dib">
+										<div class="stat-text">
+											R$ <span class="count"><p th:text = "${valorGasto}"/></span>
+										</div>
+										<div class="stat-heading">Valor Total de Gastos</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-5 col-md-6" style="margin: 2% 0 0 0">
+					<div class="card">
+						<div class="card-body">
+							<div class="stat-widget-five">
+								<div class="stat-icon dib flat-color-2">
+									<i class="pe-7s-cart"></i>
+								</div>
+								<div class="stat-content">
+									<div class="text-left dib">
+										<div class="stat-text">
+											<span class="count"><p th:text = "${qtdDeVendas}"/></span>
+										</div>
+										<div class="stat-heading">Quantidade de vendas em geral</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-5 col-md-6" style="margin: 2% 0 0 10%">
+					<div class="card">
+						<div class="card-body">
+							<div class="stat-widget-five">
+								<div class="stat-icon dib flat-color-3">
+									<i class="pe-7s-box1"></i>
+								</div>
+								<div class="stat-content">
+									<div class="text-left dib">
+										<div class="stat-text">
+											<span class="count"><p th:text = "${qtdDeProdutos}"/></span>
+										</div>
+										<div class="stat-heading">Quantidade de produtos</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-5 col-md-6" style="margin: 2% 0 0 0">
+					<div class="card">
+						<div class="card-body">
+							<div class="stat-widget-five">
+								<div class="stat-icon dib flat-color-4">
+									<i class="pe-7s-users"></i>
+								</div>
+								<div class="stat-content">
+									<div class="text-left dib">
+										<div class="stat-text">
+											<span class="count"><p th:text = "${qtdDeClientes}"/></span>
+										</div>
+										<div class="stat-heading">Quantidade de clientes</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+		<div class="clearfix"></div>
+		
+		<div class="table-responsive col-md-12" style="margin: 2% 0 0 0">
+				<table class="table table-striped table-hover table-sm">
+					<thead>
+						<tr>
+							<th>DT. PEDIDO</th>
+							<th>CLIENTE</th>
+							<th>PRODUTO</th>
+							<th>DESCRIÇÃO</th>
+							<th>DT. ENTREGA</th>
+							<th>STATUS</th>
+							<th>AÇÃO</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="p : ${pedidosEmAberto}">
+							<td th:text="${#dates.format(p.dataPedido, 'dd-MM-yyyy')}"></td>
+							<td th:text="${p.cliente.nomeCliente}"></td>
+							<td th:text="${p.produto.nomeProduto}"></td>
+							<td th:text="${p.descricaoProduto}"></td>
+							<td th:text="${#dates.format(p.dataEntrega, 'dd-MM-yyyy')}"></td>
+							<td th:text="${p.status}"></td>
+							<td colspan="2"><a class="btn btn-info btn-sm"
+								 th:href="@{/statusEmAndamento/{id} (id=${p.id}) }" role="button">
+									<span class="oi oi-arrow-circle-right" title="Alterar para Em Andamento" aria-hidden="true"></span>
+							</a> <a class="btn btn-success btn-sm"
+								 th:href="@{/statusFinalizado/{id} (id=${p.id}) }" role="button">
+									<span class="oi oi-circle-check" title="Alterar para Finalizado" aria-hidden="true"></span>
+							</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+				
+			</div>
+		</div>
+		
+	</section>		
+</body>
+</html>

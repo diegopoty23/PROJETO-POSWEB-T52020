@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head><meta charset="UTF-8"/></head>
+<body>
+	
+	    <section class="layout-content" layout:fragment="corpo">
+	
+	        <nav class="navbar navbar-expand-md bg-light">
+	            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	                <ul class="navbar-nav mr-auto">
+	                    <li class="nav-item active">
+	                        <i class="oi oi-caret-right"></i>
+	                        <span>NOVO CLIENTE</span>
+	                    </li>
+	                </ul>
+	                <a class="btn btn-primary btn-md" href="/clientedash" role="button">
+	                    <span class="oi oi-spreadsheet" title="Listar" aria-hidden="true"></span>
+	                    <span>Listar Clientes</span>
+	                </a>
+	            </div>
+	        </nav>
+	
+	        <div class="container" id="cadastro">
+	        
+	        	<div th:replace="fragments/alert"></div>
+	        	
+	            <form action="#" th:action=" ${cliente.id == null} ? @{/salvarCliente} : @{/editarCliente}" th:object="${cliente}"
+							method="post">
+							<div class="row">
+							<input type="hidden" id="id" th:field="*{id}">
+								<div class="form-group col-md-6">
+									<input type="text" required="true" th:field="*{nomeCliente}"
+										class="form-control" id="nomeCliente"
+										placeholder="Nome do Cliente"> <span
+										th:if="${#fields.hasErrors('nomeCliente')}"
+										th:errors="*{nomeCliente}" class="text-danger"></span>
+								</div>
+								<div class="form-group col-md-6">
+
+									<input type="text" required="true" th:field="*{telefone}"
+										maxlength="14" class="form-control" id="telefone"
+										data-mask="(##)#####-####" data-mask-phone="true"
+										placeholder="Telefone"> <span
+										th:if="${#fields.hasErrors('telefone')}"
+										th:errors="*{telefone}" class="text-danger"></span>
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-md-6 mt-5">
+									<input type="submit" class="btn btn-primary" value="Salvar">
+								</div>
+							</div>
+						</form>
+	        </div>
+	    </section>
+</body>
+</html>

@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<section class="layout-content" layout:fragment="corpo">
+
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><i class="oi oi-caret-right"></i>
+						<span>PEDIDOS</span></li>
+				</ul>
+				<a class="btn btn-primary btn-md" href="/cadastrarPedido"
+					role="button"> <span class="oi oi-plus" title="Cadastro"
+					aria-hidden="true"></span> <span>Novo Pedido</span>
+				</a>
+			</div>
+		</nav>
+
+		<div class="container" id="listagem">
+
+			<div th:replace="fragments/alert"></div>
+
+			<div class="table-responsive">
+				<table class="table table-striped table-hover table-sm">
+					<thead>
+						<tr>
+							<th>DT. PEDIDO</th>
+							<th>CLIENTE</th>
+							<th>PRODUTO</th>
+							<th>DT. ENTREGA</th>
+							<th>VALOR</th>
+							<th>STATUS</th>
+							<th>AÇÃO</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="p : ${pedidos}">
+							<td th:text="${#dates.format(p.dataPedido, 'dd-MM-yyyy')}"></td>
+							<td th:text="${p.cliente.nomeCliente}"></td>
+							<td th:text="${p.produto.nomeProduto}"></td>
+							<td th:text="${#dates.format(p.dataEntrega, 'dd-MM-yyyy')}"></td>
+							<td th:text="${p.valorTotal}"></td>
+							<td th:text="${p.status}"></td>
+							<td colspan="2">
+							<a class="btn btn-info btn-sm" th:href="@{/editarPedido/{id} (id=${p.id}) }" role="button">
+		                                <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
+		                            </a>
+							<a class="btn btn-danger btn-sm"
+								th:href="@{/excluirPedido/{id} (id=${p.id}) }" role="button">
+									<span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
+							</a></td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div th:replace="fragments/modal :: modal"></div>
+
+	</section>
+</body>
+</html>

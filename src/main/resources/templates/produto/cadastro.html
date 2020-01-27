@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head><meta charset="UTF-8"/></head>
+<body>
+	
+	    <section class="layout-content" layout:fragment="corpo">
+	
+	        <nav class="navbar navbar-expand-md bg-light">
+	            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+	                <ul class="navbar-nav mr-auto">
+	                    <li class="nav-item active">
+	                        <i class="oi oi-caret-right"></i>
+	                        <span>NOVO PRODUTO</span>
+	                    </li>
+	                </ul>
+	                <a class="btn btn-primary btn-md" href="/produtodash" role="button">
+	                    <span class="oi oi-spreadsheet" title="Listar" aria-hidden="true"></span>
+	                    <span>Listar Produtos</span>
+	                </a>
+	            </div>
+	        </nav>
+	
+	        <div class="container" id="cadastro">
+	        
+	        	<div th:replace="fragments/alert"></div>
+	        	
+	            <form action="#" th:action=" ${produto.id == null} ? @{/salvarProduto} : @{/editarProduto}" th:object="${produto}"
+							method="post">
+							<div class="row">
+							<input type="hidden" id="id" th:field="*{id}">
+								<div class="form-group col-md-6">
+									<input type="text" required="true" th:field="*{nomeProduto}"
+										class="form-control" id="nomeProduto"
+										placeholder="Nome do Produto"> <span
+										th:if="${#fields.hasErrors('nomeProduto')}"
+										th:errors="*{nomeProduto}" class="text-danger"></span>
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-md-6 mt-5">
+									<input type="submit" class="btn btn-primary" value="Salvar">
+								</div>
+							</div>
+						</form>
+	        </div>
+	    </section>
+</body>
+</html>

@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<section class="layout-content" layout:fragment="corpo">
+
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><i class="oi oi-caret-right"></i>
+						<span>CLIENTES</span></li>
+				</ul>
+				<a class="btn btn-primary btn-md" href="/cadastrarCliente"
+					role="button"> <span class="oi oi-plus" title="Cadastro"
+					aria-hidden="true"></span> <span>Novo Cliente</span>
+				</a>
+			</div>
+		</nav>
+
+		<div class="container" id="listagem">
+
+			<p>
+				<i class="oi oi-magnifying-glass"></i><span></span>
+				<button class="btn btn-primary" type="button" data-toggle="collapse"
+					data-target="#collapseNome" aria-controls="collapseNome">Nome
+				</button>
+				<button class="btn btn-primary" type="button" data-toggle="collapse"
+					data-target="#collapseTelefone" aria-controls="collapseTelefone">Telefone
+				</button>
+			</p>
+			<div class="row">
+				<div class="col">
+					<div class="collapse" id="collapseNome">
+
+						<nav class="navbar navbar-light bg-light">
+							<form class="form-inline" method="GET"
+								th:action="@{/buscarCliente/nome}">
+								<input class="form-control mr-sm-2" type="search"
+									placeholder="nome" aria-label="Search" th:name="nome" />
+								<button class="btn btn-outline-success my-2 my-sm-0">Pesquisar</button>
+							</form>
+						</nav>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<div class="collapse" id="collapseTelefone">
+
+						<nav class="navbar navbar-light bg-light">
+							<form class="form-inline" method="GET"
+								th:action="@{/buscarCliente/telefone}">
+								<input class="form-control mr-sm-2" type="search"
+									data-mask="(##)#####-####" data-mask-phone="true"
+									maxlength="14" placeholder="telefone" aria-label="Search"
+									th:name="telefone" />
+								<button class="btn btn-outline-success my-2 my-sm-0">Pesquisar</button>
+							</form>
+						</nav>
+
+					</div>
+				</div>
+			</div>
+
+
+			<div th:replace="fragments/alert"></div>
+
+			<div class="table-responsive">
+				<table class="table table-striped table-hover table-sm">
+					<thead>
+						<tr>
+							<th>NOME</th>
+							<th>TELEFONE</th>
+							<th>AÇÃO</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="c : ${clientes}">
+							<td th:text="${c.nomeCliente}"></td>
+							<td th:text="${c.telefone}"></td>
+							<td colspan="2"><a class="btn btn-info btn-sm"
+								th:href="@{/editarCliente/{id} (id=${c.id}) }" role="button">
+									<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
+							</a> <a class="btn btn-danger btn-sm"
+								th:href="@{/excluirCliente/{id} (id=${c.id}) }" role="button">
+									<span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
+							</a> </td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div th:replace="fragments/modal :: modal"></div>
+
+	</section>
+</body>
+</html>

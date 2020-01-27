@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<section class="layout-content" layout:fragment="corpo">
+
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><i class="oi oi-caret-right"></i>
+						<span>NOVO PEDIDO</span></li>
+				</ul>
+				<a class="btn btn-primary btn-md" href="/pedidodash" role="button">
+					<span class="oi oi-spreadsheet" title="Listar" aria-hidden="true"></span>
+					<span>Listar Pedidos</span>
+				</a>
+			</div>
+		</nav>
+
+		<div class="container" id="cadastro">
+
+			<div th:replace="fragments/alert"></div>
+
+			<form action="#"
+				th:action=" ${pedido.id == null} ? @{/salvarPedido} : @{/editarPedido}"
+				th:object="${pedido}" method="post">
+				<div class="row">
+					<input type="hidden" id="id" th:field="*{id}">
+					<div class="form-group col-md-8">
+						<select id="cliente" th:field="*{cliente}" class="form-control" required="true">
+							<option value="">--- Selecione o Cliente ---</option>
+							<option th:each="cliente : ${clientes}" th:value="${cliente.id}"
+								th:text="${cliente.nomeCliente} +'  |  TEL: '+ ${cliente.telefone}" selected="selected"></option>
+						</select>
+					</div>
+
+					<div class="form-group col-md-8">
+						<select id="produto" th:field="*{produto}" class="form-control" required="true">
+							<option value="">--- Selecione o Produto ---</option>
+							<option th:each="produto : ${produtos}" th:value="${produto.id}"
+								th:text="${produto.nomeProduto}" selected="selected"></option>
+						</select>
+					</div>
+					<div class="form-group col-md-8">
+					<label for="descricaoGasto">Descrever o Produto</label>
+						<textarea type="text" required="true" th:field="*{descricaoProduto}"
+							class="form-control" id="descricaoProduto"></textarea>
+					</div>
+
+					<div class="form-group col-md-5">
+						<label for="dataPedido">Data do pedido</label> <input
+							th:field="*{dataPedido}" type="date" class="form-control"
+							id="dataPedido" name="dataPedido" required="true"/>
+
+					</div>
+
+					<div class="form-group col-md-5">
+						<label for="dataEntrada">Data de entrega</label> <input
+							th:field="*{dataEntrega}" type="date" class="form-control"
+							id="dataEntrega" name="dataEntrega" required="true"/>
+
+					</div>
+
+					<div class="form-group col-md-3">
+						<label for="salario">Valor</label> <input required="true" retype="text"
+							th:field="*{valorVenda}" class="form-control" id="valorVenda"
+							data-mask="###0.00" data-mask-reverse="true"
+							name="valorVenda" />
+						<div class="invalid-feedback"></div>
+					</div>
+
+					<div class="form-group col-md-3">
+						<label for="salario">Desconto</label> <input type="text"
+							th:field="*{desconto}" class="form-control" id="desconto"
+							data-mask="###0.00" data-mask-reverse="true" name="desconto" />
+						<div class="invalid-feedback"></div>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-md-6 mt-5">
+						<input type="submit" class="btn btn-primary" value="Salvar">
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>
